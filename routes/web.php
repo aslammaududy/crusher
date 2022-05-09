@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Equipments\Uploader\Uploader;
 use App\Http\Livewire\Scanner\Scanner;
 use Illuminate\Support\Facades\Route;
 
@@ -19,3 +20,4 @@ Route::get('/', function () {
 });
 
 Route::get('/scanner', Scanner::class);
+Route::get('uploader', Uploader::class);

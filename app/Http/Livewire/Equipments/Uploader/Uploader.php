@@ -8,6 +8,6 @@ class Uploader extends Component
 {
     public function render()
     {
-        return view('c:\laragon\www\crusher\app.http.livewire.equipments.uploader.uploader');
+        return view('equipments.uploader.uploader');
     }
 }
