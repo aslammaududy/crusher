@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'class_namespace' => 'App\\Http\\Controllers', //'App\\Http\\Livewire',
+    'class_namespace' => 'App\\Http\\Livewire',
 
     /*
     |--------------------------------------------------------------------------
@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'view_path' => resource_path('app/Http/Controllers'), //resource_path('views/livewire'),
+    'view_path' => base_path('app/Http/Livewire'), //resource_path('views/livewire'),
 
     /*
     |--------------------------------------------------------------------------
