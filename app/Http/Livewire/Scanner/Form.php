@@ -26,6 +26,11 @@ class Form extends Component
         return view('scanner.form');
     }
 
+    public function updatedQrcode()
+    {
+        dd($this->qrcode);
+    }
+
     public function updatedImages()
     {
         $this->validate([

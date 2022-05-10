@@ -8,4 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class EquipmentHeader extends Model
 {
     use HasFactory;
+
+    public function details()
+    {
+        return $this->hasMany(
+            EquipmentDetail::class,
+            "equipment_header_code",
+            "code"
+        );
+    }
+
+    public function images()
+    {
+        return $this->hasMany(
+            EquipmentImage::class,
+            "equipment_header_code",
+            "code"
+        );
+    }
 }

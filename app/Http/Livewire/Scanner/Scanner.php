@@ -11,4 +11,9 @@ class Scanner extends Component
     {
         return view('scanner.scanner');
     }
+
+    public function updatedQrcode()
+    {
+        return redirect("equipments/" . $this->qrcode);
+    }
 }
