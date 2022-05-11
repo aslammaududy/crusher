@@ -9,8 +9,8 @@
                 <div class="col-md-6 text-nowrap">
                     <a href="{{ url('equipments/'.$this->qrcode.'/form') }}" class="btn btn-primary btn-sm">Add New
                         Equipment</a>
-                    <button type="button" wire:click="$refresh()" class="btn btn-outline-success btn-sm"
-                        aria-label="Refresh">
+                    <button type="button" wire:click="$refresh()" onclick="Swal.showLoading()"
+                        class="btn btn-outline-success btn-sm" aria-label="Refresh">
                         <span class="fa fa-refresh" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -33,13 +33,14 @@
                             <th>Equipment Name</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="equipmentsGroup">
                         @foreach ($equipments as $item)
                         <tr>
                             <td class="text-nowrap">
-                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
-                                    data-bs-target="#equipment-details" aria-expanded="false"
-                                    aria-controls="equipment-details">Show Details</button>
+                                <button class="btn btn-sm btn-outline-primary equipment-details"
+                                    data-bs-toggle="collapse" data-bs-target="#equipment-details-{{ $item->code }}"
+                                    aria-expanded="false" aria-controls="equipment-details-{{ $item->code }}">Show
+                                    Details</button>
 
                                 @php
                                 $eq = base64_encode(json_encode($item));
@@ -51,9 +52,10 @@
                             <td>{{ $item->code }}</td>
                             <td>{{ $item->name }}</td>
                         </tr>
-                        <tr class="collapse" id="equipment-details" data-equipment-code="{{ $item->code }}">
+                        <tr class="collapse" id="equipment-details-{{ $item->code }}" data-bs-parent="#equipmentsGroup"
+                            data-equipment-code="{{ $item->code }}">
                             <td colspan="4">
-                                <div class="m-4">
+                                <div class="m-4 text-center">
                                     @livewire('equipments.equipment-details', key($item->code))
                                 </div>
                             </td>
@@ -74,14 +76,10 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', function () {
-            $("#equipment-details").on('show.bs.collapse', function () {
-                var equipmentCode = $(this).data("equipment-code")
+           window.addEventListener('show.bs.collapse', function (e) {
+                var equipmentCode = $(e.target).data("equipment-code")
 
                 Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
-            })
-
-            Livewire.hook('message.sent', (message, component) => {
-                Swal.showLoading()
             })
 
             Livewire.hook('message.received', (message, component) => {
