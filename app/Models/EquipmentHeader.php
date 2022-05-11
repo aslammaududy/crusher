@@ -9,6 +9,12 @@ class EquipmentHeader extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'qr_code',
+        'code',
+        'name'
+    ];
+
     public function details()
     {
         return $this->hasMany(

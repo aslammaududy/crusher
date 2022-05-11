@@ -7,6 +7,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 text-nowrap">
+                    <a href="{{ url('equipments/'.$this->qrcode.'/form') }}" class="btn btn-primary btn-sm">Add New
+                        Equipment</a>
+                    <button type="button" wire:click="$refresh()" class="btn btn-outline-success btn-sm"
+                        aria-label="Refresh">
+                        <span class="fa fa-refresh" aria-hidden="true"></span>
+                    </button>
                 </div>
                 <div class="col-md-6">
                     <div class="text-md-end dataTables_filter" id="dataTable_filter">
@@ -34,6 +40,12 @@
                                 <button class="btn btn-sm btn-outline-primary" data-bs-toggle="collapse"
                                     data-bs-target="#equipment-details" aria-expanded="false"
                                     aria-controls="equipment-details">Show Details</button>
+
+                                @php
+                                $eq = base64_encode(json_encode($item));
+                                @endphp
+                                <a href="{{ url('equipments/'.$this->qrcode.'/form/'.$eq) }}"
+                                    class="btn btn-sm btn-outline-warning" aria-controls="equipment-details">Edit</a>
                             </td>
                             <td>{{ $item->qr_code }}</td>
                             <td>{{ $item->code }}</td>
@@ -66,6 +78,14 @@
                 var equipmentCode = $(this).data("equipment-code")
 
                 Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
+            })
+
+            Livewire.hook('message.sent', (message, component) => {
+                Swal.showLoading()
+            })
+
+            Livewire.hook('message.received', (message, component) => {
+                Swal.close()
             })
         })
     </script>

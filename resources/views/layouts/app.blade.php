@@ -74,6 +74,7 @@
     <script src='{{ asset("assets/js/script.min.js") }}'></script>
     <script src='{{ asset("assets/js/jquery.min.js") }}'></script>
 
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     @livewireScripts
 
