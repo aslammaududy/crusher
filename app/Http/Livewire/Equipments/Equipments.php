@@ -10,7 +10,7 @@ class Equipments extends Component
 {
     use WithPagination;
 
-    public $search;
+    public $search = '';
     public $qrcode;
 
     protected $paginationTheme = 'bootstrap';
@@ -23,6 +23,10 @@ class Equipments extends Component
     public function render()
     {
         $equipments = EquipmentHeader::where("qr_code", $this->qrcode)
+            ->where(function ($query) {
+                $query->where('name', 'like', '%' . $this->search . '%')
+                    ->orWhere('code', 'like', '%' . $this->search . '%');
+            })
             ->paginate(10);
 
         return view('equipments.equipments', compact("equipments"));
