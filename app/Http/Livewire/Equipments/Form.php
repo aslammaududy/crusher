@@ -53,6 +53,10 @@ class Form extends Component
             ],
         );
 
+        foreach ($this->images as $key => $image) {
+            $image->storeAs('images/equipments', "img_" . $this->equipmentCode . "_" . $key . "." . $image->getClientOriginalExtension());
+        }
+
         $this->dispatchBrowserEvent("equipmentSaved");
     }
 

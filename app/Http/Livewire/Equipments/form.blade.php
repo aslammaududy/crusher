@@ -12,8 +12,8 @@
                 </div>
                 <div class="mb-3">
                     <input class="form-control" required type="text" id="exampleInputEmail" aria-describedby="emailHelp"
-                        placeholder="Equipment Code" wire:model.defer="equipmentCode" @if (!is_null($equipmentCode)) disabled
-                        @endif />
+                        placeholder="Equipment Code" wire:model.defer="equipmentCode" @if (!empty($equipmentCode))
+                        disabled @endif />
                 </div>
                 <div class="mb-3">
                     <input class="form-control" required type="text" id="exampleInputEmail" aria-describedby="emailHelp"
@@ -53,21 +53,24 @@
                     @error('images') <span class="text-danger">{{ $message }}</span> @enderror
 
                 </div>
-                <button class="btn btn-primary d-block w-100" type="submit">Save</button>
+                <button class="btn btn-primary d-block w-100" id="btn-save" type="submit">Save</button>
             </form>
         </div>
 
         <script>
             window.addEventListener('livewire-upload-start', function () {
                 @this.set("isUploading", true);
+                $("#btn-save").prop("disabled", true)
             })
 
             window.addEventListener('livewire-upload-finish', function () {
                 @this.set("isUploading", false);
+                $("#btn-save").prop("disabled", false)
             })
 
             window.addEventListener('livewire-upload-error', function () {
                 @this.set("isUploading", false);
+                $("#btn-save").prop("disabled", false)
             })
 
             window.addEventListener('livewire-upload-progress', function (event) {
