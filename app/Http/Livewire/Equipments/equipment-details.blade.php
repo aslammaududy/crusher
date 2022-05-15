@@ -1,12 +1,31 @@
 <div>
-    <div class="spinner" wire:loading>
+    <style>
+        [contenteditable=true]:empty:before {
+            content: attr(placeholder);
+            pointer-events: none;
+            display: block;
+            /* For Firefox */
+        }
+    </style>
+
+    <div class="spinner text-center" wire:loading.block wire:target="save">
         <div class="spinner-border" role="status">
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
-    <div id="equipment-details-table" wire:loading.remove>
+    <div wire:loading.remove wire:target="save">
+        @if (session()->has("success"))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session()->get("success") }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         <div class="row">
             <div class="col-md-6 text-nowrap">
+                <button type="button" wire:click="$refresh()" class="btn btn-outline-success btn-sm"
+                    aria-label="Refresh">
+                    <span class="fa fa-refresh" aria-hidden="true"></span>
+                </button>
             </div>
             <div class="col-md-6">
                 <div class="text-md-end dataTables_filter" id="dataTable_filter">
@@ -19,6 +38,7 @@
         </div>
         <table class="table table-responsive table-bordered table-dark">
             <thead>
+                <th>Action</th>
                 <th>Equipment Code</th>
                 <th>Component Number</th>
                 <th>Material Description</th>
@@ -28,15 +48,41 @@
             </thead>
             <tbody>
                 @foreach ($details as $item)
-                <tr>
+                <tr wire:key="{{ $item->component_number }}">
+                    <td><input type="button" class="btn btn-success text-white btn-sm"
+                            wire:click="save('{{ $item->component_number }}', {{ true }}, {{ $loop->index }})"
+                            value="Update"></td>
                     <td>{{ $item->equipment_header_code }}</td>
-                    <td>{{ $item->component_quantity }}</td>
-                    <td>{{ $item->material_description }}</td>
-                    <td>{{ $item->component_quantity }}</td>
-                    <td>{{ $item->unit }}</td>
-                    <td>{{ $item->storage }}</td>
+                    <td>{{ $item->component_number }}</td>
+                    <td wire:ignore
+                        onkeyup="@this.fillDetails('material_description', this.innerText, {{ true }}, {{ $loop->index }})"
+                        contenteditable="true">{{ $item->material_description }}</td>
+                    <td wire:ignore
+                        onkeyup="@this.fillDetails('component_quantity', this.innerText, {{ true }}, {{ $loop->index }})"
+                        contenteditable="true">{{ $item->component_quantity }}</td>
+                    <td wire:ignore onkeyup="@this.fillDetails('unit', this.innerText, {{ true }}, {{ $loop->index }})"
+                        contenteditable="true">{{ $item->unit }} </td>
+                    <td wire:ignore
+                        onkeyup="@this.fillDetails('storage', this.innerText, {{ true }}, {{ $loop->index }})"
+                        contenteditable="true">{{ $item->storage }}</td>
                 </tr>
                 @endforeach
+                <tr wire:key="0">
+                    <td><input type="button" class="btn btn-primary btn-sm" wire:click="save" value="Save"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('equipment_header_code', this.innerText)" contenteditable="true">
+                    </td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('component_number', this.innerText)" contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('material_description', this.innerText)" contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('component_quantity', this.innerText)" contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill" onkeyup="@this.fillDetails('unit', this.innerText)"
+                        contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill" onkeyup="@this.fillDetails('storage', this.innerText)"
+                        contenteditable="true"></td>
+                </tr>
             </tbody>
         </table>
         <div class="row">
@@ -47,4 +93,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            window.addEventListener('details-saved', function () {
+                $(".input-details").text('')
+            })
+        })
+    </script>
 </div>

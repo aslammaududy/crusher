@@ -55,7 +55,7 @@
                         <tr class="collapse" id="equipment-details-{{ $item->code }}" data-bs-parent="#equipmentsGroup"
                             data-equipment-code="{{ $item->code }}">
                             <td colspan="4">
-                                <div class="m-4 text-center">
+                                <div class="m-4 equipment-details-content">
                                     @livewire('equipments.equipment-details', key($item->code))
                                 </div>
                             </td>
@@ -79,11 +79,17 @@
            window.addEventListener('show.bs.collapse', function (e) {
                 var equipmentCode = $(e.target).data("equipment-code")
 
+                $("#equipment-details-content").show()
+
                 Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
             })
 
             Livewire.hook('message.received', (message, component) => {
                 Swal.close()
+            })
+
+            window.addEventListener('hide.bs.collapse', function (e) {
+                $("#equipment-details-content").hide()
             })
         })
     </script>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Equipments\EquipmentDetailForm;
 use App\Http\Livewire\Equipments\Equipments;
 use App\Http\Livewire\Equipments\Form as EquipmentForm;
 use App\Http\Livewire\Equipments\Uploader\Uploader;
@@ -24,3 +25,4 @@ Route::get('/', function () {
 Route::get('/scanner', Scanner::class);
 Route::get('equipments/{qrcode}', Equipments::class);
 Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class);
+Route::get('equipments/detail/{equipmentHeaderCode}/form', EquipmentDetailForm::class);
