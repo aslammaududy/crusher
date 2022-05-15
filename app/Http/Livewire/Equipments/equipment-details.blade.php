@@ -7,13 +7,7 @@
             /* For Firefox */
         }
     </style>
-
-    <div class="spinner text-center" wire:loading.block wire:target="save">
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-    <div wire:loading.remove wire:target="save">
+    <div>
         @if (session()->has("success"))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session()->get("success") }}
@@ -22,8 +16,8 @@
         @endif
         <div class="row">
             <div class="col-md-6 text-nowrap">
-                <button type="button" wire:click="$refresh()" class="btn btn-outline-success btn-sm"
-                    aria-label="Refresh">
+                <button type="button" wire:click="$refresh()" onclick="Swal.showLoading()"
+                    class="btn btn-outline-success btn-sm" aria-label="Refresh">
                     <span class="fa fa-refresh" aria-hidden="true"></span>
                 </button>
             </div>
@@ -51,7 +45,7 @@
                 <tr wire:key="{{ $item->component_number }}">
                     <td><input type="button" class="btn btn-success text-white btn-sm"
                             wire:click="save('{{ $item->component_number }}', {{ true }}, {{ $loop->index }})"
-                            value="Update"></td>
+                            value="Update" onclick="Swal.showLoading()"></td>
                     <td>{{ $item->equipment_header_code }}</td>
                     <td>{{ $item->component_number }}</td>
                     <td wire:ignore
@@ -68,7 +62,8 @@
                 </tr>
                 @endforeach
                 <tr wire:key="0">
-                    <td><input type="button" class="btn btn-primary btn-sm" wire:click="save" value="Save"></td>
+                    <td><input type="button" class="btn btn-primary btn-sm" wire:click="save" value="Save"
+                            onclick="Swal.showLoading()"></td>
                     <td class="input-details" wire:ignore placeholder="Click to fill"
                         onkeyup="@this.fillDetails('equipment_header_code', this.innerText)" contenteditable="true">
                     </td>
@@ -78,10 +73,10 @@
                         onkeyup="@this.fillDetails('material_description', this.innerText)" contenteditable="true"></td>
                     <td class="input-details" wire:ignore placeholder="Click to fill"
                         onkeyup="@this.fillDetails('component_quantity', this.innerText)" contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill" onkeyup="@this.fillDetails('unit', this.innerText)"
-                        contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill" onkeyup="@this.fillDetails('storage', this.innerText)"
-                        contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('unit', this.innerText)" contenteditable="true"></td>
+                    <td class="input-details" wire:ignore placeholder="Click to fill"
+                        onkeyup="@this.fillDetails('storage', this.innerText)" contenteditable="true"></td>
                 </tr>
             </tbody>
         </table>
@@ -96,6 +91,10 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', function () {
+            Livewire.hook('message.received', function (message, component) {
+                Swal.close()
+            })
+
             window.addEventListener('details-saved', function () {
                 $(".input-details").text('')
             })
