@@ -25,4 +25,3 @@ Route::get('/', function () {
 Route::get('/scanner', Scanner::class);
 Route::get('equipments/{qrcode}', Equipments::class);
 Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class);
-Route::get('equipments/detail/{equipmentHeaderCode}/form', EquipmentDetailForm::class);

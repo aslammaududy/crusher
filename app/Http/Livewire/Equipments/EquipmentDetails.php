@@ -25,7 +25,7 @@ class EquipmentDetails extends Component
                 $query->where("material_description", "like", "%" . $this->search . "%")
                     ->orWhere("component_number", "like", "%" . $this->search . "%");
             })
-            ->paginate(10);
+            ->paginate(10, ['*'], "equipment-code-$this->equipmentHeaderCode");
         return view('equipments.equipment-details', compact("details"));
     }
 
@@ -41,6 +41,11 @@ class EquipmentDetails extends Component
         } else {
             $this->equipmentDetails["$key"] = $value;
         }
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage("equipment-code-$this->equipmentHeaderCode");
     }
 
     public function save($componentNumber = null, $isEdit = false, $index = 0)
