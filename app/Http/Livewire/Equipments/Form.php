@@ -38,7 +38,7 @@ class Form extends Component
 
     public function render()
     {
-        return view('equipments.form');
+        return view('Equipments.form');
     }
 
     public function save()

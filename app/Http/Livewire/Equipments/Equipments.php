@@ -29,6 +29,6 @@ class Equipments extends Component
             })
             ->paginate(10);
 
-        return view('equipments.equipments', compact("equipments"));
+        return view('Equipments.equipments', compact("equipments"));
     }
 }

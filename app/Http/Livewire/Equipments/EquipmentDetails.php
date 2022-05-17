@@ -26,7 +26,7 @@ class EquipmentDetails extends Component
                     ->orWhere("component_number", "like", "%" . $this->search . "%");
             })
             ->paginate(10, ['*'], "equipment-code-$this->equipmentHeaderCode");
-        return view('equipments.equipment-details', compact("details"));
+        return view('Equipments.equipment-details', compact("details"));
     }
 
     public function loadDetails($code)
