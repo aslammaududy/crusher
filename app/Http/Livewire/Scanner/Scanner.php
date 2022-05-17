@@ -9,7 +9,7 @@ class Scanner extends Component
     public $qrcode;
     public function render()
     {
-        return view('scanner.scanner');
+        return view('Scanner.scanner');
     }
 
     public function updatedQrcode()
