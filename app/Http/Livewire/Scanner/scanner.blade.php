@@ -1,4 +1,15 @@
 <div>
+    <style>
+        #reader {
+            width: 640px;
+        }
+
+        @media(max-width: 600px) {
+            #reader {
+                width: 300px;
+            }
+        }
+    </style>
     <h3 class="text-dark mb-4">Scanner</h3>
     <div class="card shadow">
         <div class="card-header py-3">
@@ -6,8 +17,7 @@
         </div>
         <div class="card-body row" wire:ignore>
             <div class="col-md-12" style="text-align: center;margin-bottom: 20px;">
-                <div id="reader"
-                    style="display: inline-block; position: relative; padding: 0px; border: 1px solid silver; width: 600px">
+                <div id="reader" style="display: inline-block;">
                 </div>
             </div>
         </div>
