@@ -18,6 +18,8 @@ class Equipments extends Component
     public function mount($qrcode)
     {
         $this->qrcode = $qrcode;
+
+        session(['equipments-url' => '/equipments/' . $qrcode]);
     }
 
     public function render()

@@ -24,8 +24,8 @@ Route::get('/', function () {
 
 Route::get('/scanner', Scanner::class);
 Route::get('equipments/{qrcode}', Equipments::class);
-Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class);
+Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class)->middleware('auth');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

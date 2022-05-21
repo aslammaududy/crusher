@@ -43,9 +43,13 @@
             <tbody>
                 @foreach ($details as $item)
                 <tr wire:key="{{ $item->component_number }}">
-                    <td><input type="button" class="btn btn-success text-white btn-sm"
+                    <td>
+                        @auth
+                        <input type="button" class="btn btn-success text-white btn-sm"
                             wire:click="save('{{ $item->component_number }}', {{ true }}, {{ $loop->index }})"
-                            value="Update" onclick="Swal.showLoading()"></td>
+                            value="Update" onclick="Swal.showLoading()">
+                        @endauth
+                    </td>
                     <td>{{ $item->equipment_header_code }}</td>
                     <td>{{ $item->component_number }}</td>
                     <td wire:ignore
@@ -61,6 +65,7 @@
                         contenteditable="true">{{ $item->storage }}</td>
                 </tr>
                 @endforeach
+                @auth
                 <tr wire:key="0">
                     <td><input type="button" class="btn btn-primary btn-sm" wire:click="save" value="Save"
                             onclick="Swal.showLoading()"></td>
@@ -78,6 +83,14 @@
                     <td class="input-details" wire:ignore placeholder="Click to fill"
                         onkeyup="@this.fillDetails('storage', this.innerText)" contenteditable="true"></td>
                 </tr>
+                @else
+                <tr>
+                    <td colspan="7" class="text-center">
+                        You must login to add / update
+                    </td>
+                </tr>
+                @endauth
+
             </tbody>
         </table>
         <div class="row">

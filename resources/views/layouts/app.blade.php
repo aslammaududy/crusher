@@ -16,7 +16,8 @@
 
 <body id="page-top" class="sidebar-toggled">
     <div id="wrapper">
-        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 toggled">
+        <nav
+            class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 toggled">
             <div class="container-fluid d-flex flex-column p-0"><a
                     class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-text mx-3"><span>Crusher <br> E - Inventori</span></div>
@@ -41,9 +42,20 @@
                             <div class="d-none d-sm-block topbar-divider"></div>
                             <li class="nav-item dropdown no-arrow">
                                 <div class="nav-item dropdown no-arrow">
-                                    <a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown"
-                                        href="#"><span class="d-none d-lg-inline me-2 text-gray-600 small">Logout</span>
+                                    @auth
+                                    <a class="dropdown-toggle nav-link" onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();" href="javascript:;"><span
+                                            class="d-none d-lg-inline me-2 text-gray-600 small">Logout</span>
                                     </a>
+
+                                    <form class="d-none" action="{{ route('logout') }}" id="logout-form" method="post">
+                                        @csrf
+                                    </form>
+                                    @else
+                                    <a class="dropdown-toggle nav-link" href="{{ route('login') }}"><span
+                                            class="d-none d-lg-inline me-2 text-gray-600 small">Login</span>
+                                    </a>
+                                    @endauth
                                 </div>
                             </li>
                         </ul>

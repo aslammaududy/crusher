@@ -1,4 +1,6 @@
 <div>
+    <a class="btn btn-sm btn-secondary mb-3" href="{{ url('/equipments/'.$qrcode) }}"><i class="fa fa-arrow-left"></i> Back</a>
+
     <h3 class="text-dark mb-4">Equipments Form</h3>
     <div class="card shadow">
         <div class="card-header py-3">

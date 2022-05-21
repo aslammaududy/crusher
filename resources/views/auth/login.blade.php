@@ -24,12 +24,19 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Welcome Back!</h4>
                                     </div>
-                                    <form class="user" action="{{ route('login') }}">
+                                    <form class="user" action="{{ route('login') }}" method="POST">
+                                        @csrf
                                         <div class="mb-3"><input class="form-control form-control-user" type="email"
                                                 id="exampleInputEmail" name="email" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address..." name="email" /></div>
+                                                @error('email')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                         <div class="mb-3"><input class="form-control form-control-user" type="password"
                                                 id="exampleInputPassword" placeholder="Password" name="password" />
+                                                @error('password')
+                                                    <small class="text-danger">{{ $message }}</small>
+                                                @enderror
                                         </div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
