@@ -23,6 +23,9 @@
         </div>
     </div>
 
+    <br>
+
+    @livewire('scanner.qrcode')
     <script>
         document.addEventListener('DOMContentLoaded', function () {
         function onScanSuccess(decodedText, decodedResult) {
