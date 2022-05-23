@@ -34,8 +34,10 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3"
-                            id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                    <div class="container-fluid">
+                        <button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop"
+                            type="button"><i class="fas fa-bars"></i>
+                        </button>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow">
                             </li>
@@ -45,7 +47,7 @@
                                     @auth
                                     <a class="dropdown-toggle nav-link" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();" href="javascript:;"><span
-                                            class="d-none d-lg-inline me-2 text-gray-600 small">Logout</span>
+                                            class="d-lg-inline me-2 text-gray-600 small">Logout</span>
                                     </a>
 
                                     <form class="d-none" action="{{ route('logout') }}" id="logout-form" method="post">
@@ -53,7 +55,7 @@
                                     </form>
                                     @else
                                     <a class="dropdown-toggle nav-link" href="{{ route('login') }}"><span
-                                            class="d-none d-lg-inline me-2 text-gray-600 small">Login</span>
+                                            class="d-lg-inline me-2 text-gray-600 small">Login</span>
                                     </a>
                                     @endauth
                                 </div>

@@ -16,9 +16,8 @@ class Qrcode extends Component
     public function render()
     {
         $qrcodes = EquipmentHeader::where('qr_code', 'like', '%' . $this->search . '%')
-            ->select('qr_code')
-            ->distinct()
-            ->paginate(10);
+            ->distinct('qr_code')
+            ->paginate(10, 'qr_code'); //fix error (empty page) when distinct and paginate is used together
 
         return view('Scanner.qrcode', compact('qrcodes'));
     }

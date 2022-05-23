@@ -39,7 +39,7 @@
                             <td class="text-nowrap">
                                 <button class="btn btn-sm btn-outline-primary equipment-details"
                                     data-bs-toggle="collapse" data-bs-target="#equipment-details-{{ $item->code }}"
-                                    aria-expanded="false" onclick="Swal.showLoading()" aria-controls="equipment-details-{{ $item->code }}">Show
+                                    aria-expanded="false" aria-controls="equipment-details-{{ $item->code }}">Show
                                     Details</button>
 
                                 @php
@@ -77,6 +77,8 @@
     <script>
         window.addEventListener('DOMContentLoaded', function () {
            window.addEventListener('show.bs.collapse', function (e) {
+                Swal.showLoading()
+
                 var equipmentCode = $(e.target).data("equipment-code")
 
                 $("#equipment-details-content").show()
