@@ -46,10 +46,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-
-        })
-    </script>
 </div>

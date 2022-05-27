@@ -26,24 +26,27 @@
     <br>
 
     @livewire('scanner.qrcode')
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        function onScanSuccess(decodedText, decodedResult) {
-            // handle the scanned code as you like, for example:
-            @this.set("qrcode", decodedText);
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-        }
-
-        function onScanFailure(error) {
-            // handle scan failure, usually better to ignore and keep scanning.
-            // for example:
-        }
-
-        let html5QrcodeScanner = new Html5QrcodeScanner(
-            "reader",
-            { fps: 10, qrbox: {width: 250, height: 250} },
-            /* verbose= */ false);
-            html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-        })
-    </script>
 </div>
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    function onScanSuccess(decodedText, decodedResult) {
+        // handle the scanned code as you like, for example:
+        @this.set("qrcode", decodedText);
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+    }
+
+    function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+    }
+
+    let html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader",
+        { fps: 10, qrbox: {width: 250, height: 250} },
+        /* verbose= */ false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+    })
+</script>
+@endpush

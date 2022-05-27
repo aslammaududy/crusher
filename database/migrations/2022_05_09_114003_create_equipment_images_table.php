@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('equipment_images', function (Blueprint $table) {
             $table->id();
-            $table->string("equipment_header_code");
+            $table->string("component_number");
             $table->string("name");
             $table->timestamps();
         });

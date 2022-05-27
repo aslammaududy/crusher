@@ -5,25 +5,13 @@ namespace App\Http\Livewire\Equipments;
 use App\Http\Livewire\Traits\RedirectBack;
 use App\Models\EquipmentHeader;
 use Livewire\Component;
-use Livewire\WithFileUploads;
 
 
 class Form extends Component
 {
-    use WithFileUploads;
-
     public $qrcode;
     public $equipmentCode;
     public $equipmentName;
-    public $componentCode;
-    public $materialDescription;
-    public $componentQuantity;
-    public $unit;
-    public $storage;
-    public $images = [];
-
-    public $uploadProgress = 0;
-    public $isUploading = false;
 
     public function mount($qrcode, $equipment = null)
     {
@@ -52,26 +40,6 @@ class Form extends Component
                 'name' => $this->equipmentName
             ],
         );
-
-        foreach ($this->images as $key => $image) {
-            $image->storeAs('images/equipments', "img_" . $this->equipmentCode . "_" . $key . "." . $image->getClientOriginalExtension());
-        }
-
-        $this->dispatchBrowserEvent("equipmentSaved");
-    }
-
-    public function updatedImages()
-    {
-        $this->validate([
-            'images.*' => 'image|max:2048',
-        ]);
-
-        if (count($this->images) > 5) {
-            $this->addError('images', 'The uploaded images can not contain more than 5 items.');
-            $this->images = [];
-            $this->uploadProgress = 0;
-            $this->isUploading = false;
-        }
     }
 
     public function redirectBack()

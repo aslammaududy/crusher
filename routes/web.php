@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Livewire\Equipments\EquipmentDetailForm;
+use App\Http\Livewire\Equipments\EquipmentDetailForm as DetailForm;
 use App\Http\Livewire\Equipments\Equipments;
 use App\Http\Livewire\Equipments\Form as EquipmentForm;
 use App\Http\Livewire\Equipments\Uploader\Uploader;

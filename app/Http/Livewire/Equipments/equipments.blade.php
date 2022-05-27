@@ -9,8 +9,8 @@
                 <div class="col-md-6 text-nowrap">
                     <a href="{{ url('equipments/'.$this->qrcode.'/form') }}" class="btn btn-primary btn-sm">Add New
                         Equipment</a>
-                    <button type="button" wire:click="$refresh()" onclick="Swal.showLoading()"
-                        class="btn btn-outline-success btn-sm" aria-label="Refresh">
+                    <button type="button" wire:click="$refresh(); $emitSelf('equipmentsRefreshed')"
+                        onclick="Swal.showLoading()" class="btn btn-outline-success btn-sm" aria-label="Refresh">
                         <span class="fa fa-refresh" aria-hidden="true"></span>
                     </button>
                 </div>
@@ -38,8 +38,10 @@
                         <tr>
                             <td class="text-nowrap">
                                 <button class="btn btn-sm btn-outline-primary equipment-details"
-                                    data-bs-toggle="collapse" data-bs-target="#equipment-details-{{ $item->code }}"
-                                    aria-expanded="false" aria-controls="equipment-details-{{ $item->code }}">Show
+                                    id="btn-{{ $item->code }}" data-bs-toggle="collapse"
+                                    data-bs-target="#equipment-details-{{ $item->code }}" aria-expanded="false"
+                                    onclick="this.innerText == 'Show Details' ? this.innerText = 'Hide Details' : this.innerText = 'Show Details'"
+                                    aria-controls="equipment-details-{{ $item->code }}">Show
                                     Details</button>
 
                                 @php
@@ -73,26 +75,24 @@
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-           window.addEventListener('show.bs.collapse', function (e) {
-                Swal.showLoading()
-
-                var equipmentCode = $(e.target).data("equipment-code")
-
-                $("#equipment-details-content").show()
-
-                Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
-            })
-
-            Livewire.hook('message.received', (message, component) => {
-                Swal.close()
-            })
-
-            window.addEventListener('hide.bs.collapse', function (e) {
-                $("#equipment-details-content").hide()
-            })
-        })
-    </script>
 </div>
+
+@push('scripts')
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+       window.addEventListener('show.bs.collapse', function (e) {
+            Swal.showLoading()
+
+            var equipmentCode = $(e.target).data("equipment-code")
+
+            $("#equipment-details-content").show()
+
+            Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
+        })
+
+        window.addEventListener('hide.bs.collapse', function (e) {
+            $("#equipment-details-content").hide()
+        })
+    })
+</script>
+@endpush

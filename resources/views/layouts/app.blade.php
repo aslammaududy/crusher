@@ -84,7 +84,7 @@
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
     @livewireScripts
 
-    @yield('scripts')
+    @stack('scripts')
 </body>
 
 </html>

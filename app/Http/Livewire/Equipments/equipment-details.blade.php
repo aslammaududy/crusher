@@ -1,12 +1,4 @@
 <div>
-    <style>
-        [contenteditable=true]:empty:before {
-            content: attr(placeholder);
-            pointer-events: none;
-            display: block;
-            /* For Firefox */
-        }
-    </style>
     <div>
         @if (session()->has("success"))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -16,6 +8,11 @@
         @endif
         <div class="row">
             <div class="col-md-6 text-nowrap">
+                <button type="button" data-bs-toggle="modal"
+                    data-equipment-header-code="{{ $this->equipmentHeaderCode }}" data-bs-target="#exampleModal"
+                    class="btn btn-primary btn-sm">
+                    Add Equipment Detail
+                </button>
                 <button type="button" wire:click="$refresh()" onclick="Swal.showLoading()"
                     class="btn btn-outline-success btn-sm" aria-label="Refresh">
                     <span class="fa fa-refresh" aria-hidden="true"></span>
@@ -32,8 +29,6 @@
         </div>
         <table class="table table-responsive table-bordered table-dark">
             <thead>
-                <th>Action</th>
-                <th>Equipment Code</th>
                 <th>Component Number</th>
                 <th>Material Description</th>
                 <th>Component Quantity</th>
@@ -43,53 +38,13 @@
             <tbody>
                 @foreach ($details as $item)
                 <tr wire:key="{{ $item->component_number }}">
-                    <td>
-                        @auth
-                        <input type="button" class="btn btn-success text-white btn-sm"
-                            wire:click="save('{{ $item->component_number }}', {{ true }}, {{ $loop->index }})"
-                            value="Update" onclick="Swal.showLoading()">
-                        @endauth
-                    </td>
-                    <td>{{ $item->equipment_header_code }}</td>
                     <td>{{ $item->component_number }}</td>
-                    <td wire:ignore
-                        onkeyup="@this.fillDetails('material_description', this.innerText, {{ true }}, {{ $loop->index }})"
-                        contenteditable="true">{{ $item->material_description }}</td>
-                    <td wire:ignore
-                        onkeyup="@this.fillDetails('component_quantity', this.innerText, {{ true }}, {{ $loop->index }})"
-                        contenteditable="true">{{ $item->component_quantity }}</td>
-                    <td wire:ignore onkeyup="@this.fillDetails('unit', this.innerText, {{ true }}, {{ $loop->index }})"
-                        contenteditable="true">{{ $item->unit }} </td>
-                    <td wire:ignore
-                        onkeyup="@this.fillDetails('storage', this.innerText, {{ true }}, {{ $loop->index }})"
-                        contenteditable="true">{{ $item->storage }}</td>
+                    <td>{{ $item->material_description }}</td>
+                    <td>{{ $item->component_quantity }}</td>
+                    <td>{{ $item->unit }} </td>
+                    <td>{{ $item->storage }}</td>
                 </tr>
                 @endforeach
-                @auth
-                <tr wire:key="0">
-                    <td><input type="button" class="btn btn-primary btn-sm" wire:click="save" value="Save"
-                            onclick="Swal.showLoading()"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('equipment_header_code', this.innerText)" contenteditable="true">
-                    </td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('component_number', this.innerText)" contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('material_description', this.innerText)" contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('component_quantity', this.innerText)" contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('unit', this.innerText)" contenteditable="true"></td>
-                    <td class="input-details" wire:ignore placeholder="Click to fill"
-                        onkeyup="@this.fillDetails('storage', this.innerText)" contenteditable="true"></td>
-                </tr>
-                @else
-                <tr>
-                    <td colspan="7" class="text-center">
-                        You must login to add / update
-                    </td>
-                </tr>
-                @endauth
 
             </tbody>
         </table>
@@ -102,15 +57,39 @@
         </div>
     </div>
 
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            Livewire.hook('message.received', function (message, component) {
-                Swal.close()
-            })
-
-            window.addEventListener('details-saved', function () {
-                $(".input-details").text('')
-            })
-        })
-    </script>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    @auth
+                    @livewire('equipments.equipment-detail-form')
+                    @else
+                    <h5 class="text-center">
+                        You have to login first
+                    </h5>
+                    @endauth
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+@push('scripts')
+<script>
+    window.addEventListener('DOMContentLoaded', function () {
+        $("#exampleModal").on('show.bs.modal', function (e) {
+            var equipmentHeaderCode = $(e.relatedTarget).data('equipment-header-code')
+
+            Swal.showLoading()
+            Livewire.emitTo('equipments.equipment-detail-form', 'loadHeaderCode', equipmentHeaderCode)
+        })
+
+        Livewire.hook('message.processed', function (message, component) {
+            Swal.close()
+        })
+    })
+</script>
+@endpush

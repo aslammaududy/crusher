@@ -23,13 +23,4 @@ class EquipmentHeader extends Model
             "code"
         );
     }
-
-    public function images()
-    {
-        return $this->hasMany(
-            EquipmentImage::class,
-            "equipment_header_code",
-            "code"
-        );
-    }
 }

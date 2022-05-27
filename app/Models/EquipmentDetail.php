@@ -17,4 +17,13 @@ class EquipmentDetail extends Model
         'unit',
         'storage'
     ];
+
+    public function file()
+    {
+        return $this->hasMany(
+            EquipmentImage::class,
+            "component_number",
+            "component_number"
+        );
+    }
 }

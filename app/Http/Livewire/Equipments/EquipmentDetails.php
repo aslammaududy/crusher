@@ -12,8 +12,6 @@ class EquipmentDetails extends Component
 
     public $equipmentHeaderCode;
     public $search = '';
-    public $equipmentDetails = [];
-    public $editedEquipmentDetails = [];
 
     protected $listeners = ["loadDetails"];
     protected $paginationTheme = 'bootstrap';
@@ -34,37 +32,9 @@ class EquipmentDetails extends Component
         $this->equipmentHeaderCode = $code;
     }
 
-    public function fillDetails($key, $value, $isEdit = false, $index = 0)
-    {
-        if ($isEdit) {
-            $this->editedEquipmentDetails[$index]["$key"] = $value;
-        } else {
-            $this->equipmentDetails["$key"] = $value;
-        }
-    }
 
     public function updatingSearch()
     {
         $this->resetPage("equipment-code-$this->equipmentHeaderCode");
-    }
-
-    public function save($componentNumber = null, $isEdit = false, $index = 0)
-    {
-        if ($isEdit) {
-            $details = $this->editedEquipmentDetails[$index];
-        } else {
-            $details = $this->equipmentDetails;
-        }
-
-        EquipmentDetail::updateOrCreate(
-            [
-                'component_number' => $componentNumber,
-            ],
-            $details,
-        );
-
-        $details = [];
-        $this->dispatchBrowserEvent('details-saved');
-        session()->flash("success", "Equipment detail saved successfully");
     }
 }
