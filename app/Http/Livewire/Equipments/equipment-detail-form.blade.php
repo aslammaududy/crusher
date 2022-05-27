@@ -45,6 +45,10 @@
 
 @push('scripts')
 <script>
+    window.addEventListener('DOMContentLoaded', function () {
+        Swal.close()
+    })
+
     window.addEventListener('livewire-upload-start', function () {
         @this.set("isUploading", true);
         $("#btn-save").prop("disabled", true)
