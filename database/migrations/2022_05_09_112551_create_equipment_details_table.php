@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("component_quantity");
             $table->string("unit");
             $table->string("storage");
+            $table->string("file");
             $table->timestamps();
         });
     }
