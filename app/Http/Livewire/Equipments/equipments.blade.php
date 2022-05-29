@@ -40,7 +40,6 @@
                                 <button class="btn btn-sm btn-outline-primary equipment-details"
                                     id="btn-{{ $item->code }}" data-bs-toggle="collapse"
                                     data-bs-target="#equipment-details-{{ $item->code }}" aria-expanded="false"
-                                    onclick="this.innerText == 'Show Details' ? this.innerText = 'Hide Details' : this.innerText = 'Show Details'"
                                     aria-controls="equipment-details-{{ $item->code }}">Show
                                     Details</button>
 
@@ -87,11 +86,16 @@
 
             $("#equipment-details-content").show()
 
+            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Hide Details';
+
             Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
         })
 
         window.addEventListener('hide.bs.collapse', function (e) {
             $("#equipment-details-content").hide()
+
+            var equipmentCode = $(e.target).data("equipment-code")
+            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Show Details';
         })
     })
 </script>

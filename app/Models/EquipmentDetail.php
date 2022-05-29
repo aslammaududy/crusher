@@ -15,7 +15,8 @@ class EquipmentDetail extends Model
         'material_description',
         'component_quantity',
         'unit',
-        'storage'
+        'storage',
+        'file'
     ];
 
     public function file()

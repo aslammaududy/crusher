@@ -57,17 +57,18 @@ class EquipmentDetailForm extends Component
                 "component_quantity" => $this->componentQuantity,
                 "unit" => $this->unit,
                 "storage" => $this->storage,
+                "file" => "",
             ]);
 
             if (!is_null($this->file)) {
                 $filePath = 'file/equipments';
                 $fileName = "file_" . $this->componentNumber . "." . $this->file->getClientOriginalExtension();
 
-                $detail->file()->create([
-                    "name" => $filePath . "/" . $fileName,
-                ]);
+                $detail->file = $filePath . "/" . $fileName;
 
-                $this->file->storeAs($filePath, $fileName);
+                $this->file->storeAs('public/'.$filePath, $fileName);
+
+                $detail->save();
             }
 
             $this->dispatchBrowserEvent("equipmentSaved");

@@ -76,7 +76,7 @@
                 'success'
             )
 
-            $("#exampleModal").hide()
+            $("#exampleModal").modal('hide')
         }, 300);
     })
 

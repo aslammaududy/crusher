@@ -29,6 +29,7 @@
         </div>
         <table class="table table-responsive table-bordered table-dark">
             <thead>
+                <th>File</th>
                 <th>Component Number</th>
                 <th>Material Description</th>
                 <th>Component Quantity</th>
@@ -38,6 +39,7 @@
             <tbody>
                 @foreach ($details as $item)
                 <tr wire:key="{{ $item->component_number }}">
+                    <td><a href="{{ Storage::url($item->file) }}">File</a></td>
                     <td>{{ $item->component_number }}</td>
                     <td>{{ $item->material_description }}</td>
                     <td>{{ $item->component_quantity }}</td>
@@ -83,7 +85,12 @@
         $("#exampleModal").on('show.bs.modal', function (e) {
             var equipmentHeaderCode = $(e.relatedTarget).data('equipment-header-code')
 
-            Swal.showLoading()
+            var auth = '{{ auth()->check() }}'
+
+            if (auth == 1) {
+                Swal.showLoading()
+            }
+
             Livewire.emitTo('equipments.equipment-detail-form', 'loadHeaderCode', equipmentHeaderCode)
         })
 
