@@ -39,15 +39,31 @@
             <tbody>
                 @foreach ($details as $item)
                 <tr wire:key="{{ $item->component_number }}">
-                    <td><a href="{{ Storage::url($item->file) }}">File</a></td>
+                    <td><a href="javascript:;" data-bs-toggle="modal"
+                            data-bs-target="#fileModal-{{ $item->component_number }}">File</a></td>
                     <td>{{ $item->component_number }}</td>
                     <td>{{ $item->material_description }}</td>
                     <td>{{ $item->component_quantity }}</td>
                     <td>{{ $item->unit }} </td>
-                    <td>{{ $item->storage }}</td>
+                    <td>
+                        {{ $item->storage }}
+                        <div class="modal fade" id="fileModal-{{ $item->component_number }}" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog {{ !empty($item->file) ? 'modal-xl' : '' }}">
+                                <div class="modal-content">
+                                    <div class="modal-body text-center">
+                                        <x-file-viewer :src="Storage::url($item->file)" :component-number="$item->component_number" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
         <div class="row">
