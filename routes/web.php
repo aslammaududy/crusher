@@ -5,6 +5,7 @@ use App\Http\Livewire\Equipments\Equipments;
 use App\Http\Livewire\Equipments\Form as EquipmentForm;
 use App\Http\Livewire\Equipments\Uploader\Uploader;
 use App\Http\Livewire\Scanner\Scanner;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/storage-link', function ()
+{
+    Artisan::call('storage:link');
+});
 
 Route::get('/', function () {
     return redirect('/scanner');
