@@ -42,7 +42,12 @@
                     'Success!',
                     'File Upload Successfully',
                     'success'
-                )
+                ).then(function (result) {
+                    if (result.isConfirmed) {
+                        Swal.showLoading()
+                        @this.emitTo("equipments.equipment-details", "$refresh");
+                    }
+                })
 
                 $("#fileModal-{{ $componentNumber }}").modal('hide')
             }, 300);

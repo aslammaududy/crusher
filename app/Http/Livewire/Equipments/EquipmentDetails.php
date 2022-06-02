@@ -13,7 +13,10 @@ class EquipmentDetails extends Component
     public $equipmentHeaderCode;
     public $search = '';
 
-    protected $listeners = ["loadDetails"];
+    protected $listeners = [
+        "loadDetails",
+        '$refresh' // refreshing component after upload file from upload-file component
+    ];
     protected $paginationTheme = 'bootstrap';
 
     public function render()

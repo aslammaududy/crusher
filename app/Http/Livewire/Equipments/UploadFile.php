@@ -48,6 +48,6 @@ class UploadFile extends Component
 
         $detail->save();
 
-        $this->dispatchBrowserEvent("uploadSucceded");
+        $this->dispatchBrowserEvent("uploadSucceded", ["equipment_header_code" => $detail->equipment_header_code]);
     }
 }
