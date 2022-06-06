@@ -30,6 +30,9 @@
         <table class="table table-responsive table-bordered table-dark">
             <thead>
                 <th>File</th>
+                @if (auth()->user()->role == 'admin')
+                <th>Action</th>
+                @endif
                 <th>Component Number</th>
                 <th>Material Description</th>
                 <th>Component Quantity</th>
@@ -39,8 +42,21 @@
             <tbody>
                 @foreach ($details as $item)
                 <tr wire:key="{{ $item->component_number }}">
-                    <td><a href="javascript:;" data-bs-toggle="modal"
-                            data-bs-target="#fileModal-{{ $item->component_number }}">File</a></td>
+                    <td>
+                        <a href="javascript:;" data-bs-toggle="modal"
+                            data-bs-target="#fileModal-{{ $item->component_number }}">
+                            File
+                        </a>
+                    </td>
+                    @if (auth()->user()->role == 'admin')
+                    <td>
+                        <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                            data-equipment-header-code="{{ $this->equipmentHeaderCode }}" data-bs-target="#exampleModal"
+                            wire:click="$emitTo('equipments.equipment-detail-form', 'editing', '{{ $item->component_number }}')">
+                            Edit
+                        </button>
+                    </td>
+                    @endif
                     <td>{{ $item->component_number }}</td>
                     <td>{{ $item->material_description }}</td>
                     <td>{{ $item->component_quantity }}</td>
@@ -52,7 +68,8 @@
                             <div class="modal-dialog {{ !empty($item->file) ? 'modal-xl' : '' }}">
                                 <div class="modal-content">
                                     <div class="modal-body text-center">
-                                        <x-file-viewer :src="Storage::url($item->file)" :component-number="$item->component_number" />
+                                        <x-file-viewer :src="Storage::url($item->file)"
+                                            :component-number="$item->component_number" />
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

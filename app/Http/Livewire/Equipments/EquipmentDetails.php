@@ -15,7 +15,7 @@ class EquipmentDetails extends Component
 
     protected $listeners = [
         "loadDetails",
-        '$refresh' // refreshing component after upload file from upload-file component
+        "equipmentSaved" => '$refresh' // refreshing component after upload file from upload-file component
     ];
     protected $paginationTheme = 'bootstrap';
 

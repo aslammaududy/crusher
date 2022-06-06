@@ -19,10 +19,11 @@ class EquipmentDetailForm extends Component
     public $storage;
     public $file;
 
+    public $isUpdate = false;
     public $uploadProgress = 0;
     public $isUploading = false;
 
-    protected $listeners = ['loadHeaderCode'];
+    protected $listeners = ['loadHeaderCode', 'editing'];
 
     public function render()
     {
@@ -32,6 +33,19 @@ class EquipmentDetailForm extends Component
     public function loadHeaderCode($code)
     {
         $this->equipmentHeaderCode = $code;
+    }
+
+    public function editing($number)
+    {
+        $this->componentNumber = $number;
+        $this->isUpdate = true;
+
+        $detail = EquipmentDetail::where("component_number", $number)->first();
+
+        $this->materialDescription = $detail->material_description;
+        $this->componentQuantity = $detail->component_quantity;
+        $this->unit = $detail->unit;
+        $this->storage = $detail->storage;
     }
 
     public function updatedImages()
@@ -48,17 +62,21 @@ class EquipmentDetailForm extends Component
     {
         DB::beginTransaction();
         try {
-
-
-            $detail = EquipmentDetail::create([
-                "equipment_header_code" => $this->equipmentHeaderCode,
-                "component_number" => $this->componentNumber,
-                "material_description" => $this->materialDescription,
-                "component_quantity" => $this->componentQuantity,
-                "unit" => $this->unit,
-                "storage" => $this->storage,
-                "file" => "",
-            ]);
+            $detail = EquipmentDetail::updateOrCreate(
+                [
+                    "equipment_header_code" => $this->equipmentHeaderCode,
+                    "component_number" => $this->componentNumber,
+                ],
+                [
+                    "equipment_header_code" => $this->equipmentHeaderCode,
+                    "component_number" => $this->componentNumber,
+                    "material_description" => $this->materialDescription,
+                    "component_quantity" => $this->componentQuantity,
+                    "unit" => $this->unit,
+                    "storage" => $this->storage,
+                    "file" => "",
+                ]
+            );
 
             if (!is_null($this->file)) {
                 $filePath = 'file/equipments';
@@ -66,7 +84,7 @@ class EquipmentDetailForm extends Component
 
                 $detail->file = $filePath . "/" . $fileName;
 
-                $this->file->storeAs('public/'.$filePath, $fileName);
+                $this->file->storeAs('public/' . $filePath, $fileName);
 
                 $detail->save();
             }

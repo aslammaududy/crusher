@@ -7,8 +7,8 @@
                 placeholder="Equipment Header Code" wire:model.defer="equipmentHeaderCode" disabled />
         </div>
         <div class="mb-3">
-            <input class="form-control" required type="text" id="exampleInputPassword" placeholder="Component Number"
-                wire:model="componentNumber" />
+            <input class="form-control" required type="text" @if ($isUpdate) disabled @endif id="exampleInputPassword"
+                placeholder="Component Number" wire:model="componentNumber" />
         </div>
         <div class="mb-3">
             <input class="form-control" required type="text" id="exampleInputPassword"
@@ -26,6 +26,7 @@
             <input class="form-control" required type="text" id="exampleInputPassword" placeholder="Storage"
                 wire:model="storage" />
         </div>
+        @if($isUpdate == false)
         <div class="mb-3 row me-3">
             @if ($file)
             <div class="col-auto">
@@ -38,6 +39,8 @@
             @error('file') <span class="text-danger">{{ $message }}</span> @enderror
 
         </div>
+        @endif
+
         <button class="btn btn-primary d-block w-100" onclick="Swal.showLoading()" id="btn-save"
             type="submit">Save</button>
     </form>
@@ -74,10 +77,14 @@
                 'Success!',
                 'Equipment Saved Successfully',
                 'success'
-            )
+            ).then(function (result) {
+                if (result.isConfirmed) {
+                    Livewire.emitTo('equipments.equipment-details','equipmentSaved')
+                }
+            })
 
             $("#exampleModal").modal('hide')
-        }, 300);
+        }, 100);
     })
 
     window.addEventListener("equipmentNotSaved", function (event) {
@@ -92,7 +99,7 @@
             'error'
         )
         console.log(`${event.detail.message}\n${event.detail.line}\n${event.detail.file}`);
-        }, 300);
+        }, 100);
     })
 </script>
 @endpush
