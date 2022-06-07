@@ -43,10 +43,13 @@
             </thead>
             <tbody>
                 @foreach ($details as $item)
-                <tr wire:key="{{ $item->component_number }}">
+                @php
+                $modalID = "fileModal-".random_int(1, 1000)
+                @endphp
+                <tr wire:key="{{ $modalID }}">
                     <td>
                         <a href="javascript:;" data-bs-toggle="modal"
-                            data-bs-target="#fileModal-{{ $item->component_number }}">
+                            data-bs-target="#{{ $modalID }}">
                             File
                         </a>
                     </td>
@@ -67,7 +70,7 @@
                     <td>{{ $item->unit }} </td>
                     <td>
                         {{ $item->storage }}
-                        <div class="modal fade" id="fileModal-{{ $item->component_number }}" tabindex="-1"
+                        <div class="modal fade" id="{{ $modalID }}" tabindex="-1"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog {{ !empty($item->file) ? 'modal-xl' : '' }}">
                                 <div class="modal-content">

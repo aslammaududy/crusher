@@ -9,7 +9,7 @@
                 <div class="col-md-6 text-nowrap">
                     <a href="{{ url('equipments/'.$this->qrcode.'/form') }}" class="btn btn-primary btn-sm">Add New
                         Equipment</a>
-                    <button type="button" wire:click="$refresh(); $emitSelf('equipmentsRefreshed')"
+                    <button type="button" wire:click="$refresh();"
                         onclick="Swal.showLoading()" class="btn btn-outline-success btn-sm" aria-label="Refresh">
                         <span class="fa fa-refresh" aria-hidden="true"></span>
                     </button>
