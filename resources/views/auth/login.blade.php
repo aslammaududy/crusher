@@ -48,6 +48,8 @@
                                             </div>
                                         </div><button class="btn btn-primary d-block btn-user w-100"
                                             type="submit">Login</button>
+                                            <br>
+                                            <small>Don't have an account? <a href="{{ route('register') }}">Register</a> </small>
                                         <hr />
                                     </form>
                                     {{-- <div class="text-center"><a class="small" href="forgot-password.html">Forgot
