@@ -30,9 +30,11 @@
         <table class="table table-responsive table-bordered table-dark">
             <thead>
                 <th>File</th>
+                @auth
                 @if (auth()->user()->role == 'admin')
                 <th>Action</th>
                 @endif
+                @endauth
                 <th>Component Number</th>
                 <th>Material Description</th>
                 <th>Component Quantity</th>
@@ -48,6 +50,7 @@
                             File
                         </a>
                     </td>
+                    @auth
                     @if (auth()->user()->role == 'admin')
                     <td>
                         <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
@@ -57,6 +60,7 @@
                         </button>
                     </td>
                     @endif
+                    @endauth
                     <td>{{ $item->component_number }}</td>
                     <td>{{ $item->material_description }}</td>
                     <td>{{ $item->component_quantity }}</td>
@@ -88,25 +92,6 @@
             </div>
             <div class="col-md-6">
                 {{ $details->links() }}
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    @auth
-                    @livewire('equipments.equipment-detail-form')
-                    @else
-                    <h5 class="text-center">
-                        You have to login first
-                    </h5>
-                    @endauth
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
