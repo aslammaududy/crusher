@@ -4,7 +4,7 @@
         <div class="mb-3 row me-3">
             @if ($file)
             <div class="col-auto">
-                <img class="rounded-circle mb-3 mt-4" src="{{ $file->temporaryUrl() }}" width="120" height="120" />
+                {{-- <img class="rounded-circle mb-3 mt-4" src="{{ $file->temporaryUrl() }}" width="120" height="120" /> --}}
             </div>
             @endif
             <progress max="100" class="mt-3 mb-3 ms-3" wire:model="uploadProgress"></progress>
