@@ -125,19 +125,26 @@
         function deleteEquipmentDetail(componentNumber) {
             Swal.fire('Attention!',
                 'Are you sure you want to delete this equipment detail?',
-                'warning').then(function(result) {
-                    if (result.isConfirmed){
-                        @this.delete(componentNumber);
-                    }
+                'warning').then(function (result) {
+                if (result.isConfirmed) {
+                    Swal.showLoading()
+                    @this.delete(componentNumber);
+                }
             })
         }
 
-        window.addEventListener('componentDetailDeleted', function() {
-            Swal.fire(
-                'Success!',
-                'Equipment Deleted Successfully',
-                'success'
-            )
+        window.addEventListener('componentDetailDeleted', function () {
+            setTimeout(function () {
+                Swal.fire(
+                    'Success!',
+                    'Equipment Deleted Successfully',
+                    'success'
+                ).then(function (result) {
+                    if (result.isConfirmed) {
+                        Livewire.emitTo('equipments.equipment-details',"equipmentDetailDeleted")
+                    }
+                })
+            }, 100)
         })
     </script>
 @endpush
