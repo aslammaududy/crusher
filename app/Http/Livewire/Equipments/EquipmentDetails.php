@@ -23,8 +23,8 @@ class EquipmentDetails extends Component
     {
         $details = EquipmentDetail::where(['equipment_header_code' => $this->equipmentHeaderCode])
             ->where(function ($query) {
-                $query->where("material_description", "like", "%" . $this->search . "%")
-                    ->orWhere("component_number", "like", "%" . $this->search . "%");
+                $query->where("material_description", "like", "%".$this->search."%")
+                    ->orWhere("component_number", "like", "%".$this->search."%");
             })
             ->paginate(10, ['*'], "equipment-code-$this->equipmentHeaderCode");
         return view('Equipments.equipment-details', compact("details"));
@@ -39,5 +39,16 @@ class EquipmentDetails extends Component
     public function updatingSearch()
     {
         $this->resetPage("equipment-code-$this->equipmentHeaderCode");
+    }
+
+    public function delete($component_number)
+    {
+        EquipmentDetail::where('component_number', $component_number)
+            ->where(function ($query) {
+                $query->where('storage', '')
+                    ->orwhereNull('storage');
+            })->delete();
+
+        $this->dispatchBrowserEvent('componentDetailDeleted');
     }
 }

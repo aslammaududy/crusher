@@ -68,8 +68,6 @@ class EquipmentDetailForm extends Component
                     "component_number" => $this->componentNumber,
                 ],
                 [
-                    "equipment_header_code" => $this->equipmentHeaderCode,
-                    "component_number" => $this->componentNumber,
                     "material_description" => $this->materialDescription,
                     "component_quantity" => $this->componentQuantity,
                     "unit" => $this->unit,

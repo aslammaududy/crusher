@@ -61,6 +61,11 @@
                                         wire:click="$emitTo('equipments.equipment-detail-form', 'editing', '{{ $item->component_number }}')">
                                     Edit
                                 </button>
+                                <button class="btn btn-sm btn-danger"
+                                        data-equipment-header-code="{{ $this->equipmentHeaderCode }}"
+                                        onclick="deleteEquipmentDetail({{$item->component_number}})">
+                                    Delete
+                                </button>
                             </td>
                         @endif
                     @endauth
@@ -115,6 +120,24 @@
             Livewire.hook('message.processed', function (message, component) {
                 Swal.close()
             })
+        })
+
+        function deleteEquipmentDetail(componentNumber) {
+            Swal.fire('Attention!',
+                'Are you sure you want to delete this equipment detail?',
+                'warning').then(function(result) {
+                    if (result.isConfirmed){
+                        @this.delete(componentNumber);
+                    }
+            })
+        }
+
+        window.addEventListener('componentDetailDeleted', function() {
+            Swal.fire(
+                'Success!',
+                'Equipment Deleted Successfully',
+                'success'
+            )
         })
     </script>
 @endpush
