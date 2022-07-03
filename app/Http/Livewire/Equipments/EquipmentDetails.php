@@ -42,13 +42,12 @@ class EquipmentDetails extends Component
         $this->resetPage("equipment-code-$this->equipmentHeaderCode");
     }
 
-    public function delete($component_number)
+    public function delete($component_number, $storage)
     {
-        EquipmentDetail::where('component_number', $component_number)
-            ->where(function ($query) {
-                $query->where('storage', '')
-                    ->orwhereNull('storage');
-            })->delete();
+        EquipmentDetail::where([
+            'component_number' => $component_number,
+            'storage' => $storage
+        ])->delete();
 
         $this->dispatchBrowserEvent('componentDetailDeleted');
     }
