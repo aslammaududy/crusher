@@ -63,7 +63,7 @@
                                 </button>
                                 <button class="btn btn-sm btn-danger"
                                         data-equipment-header-code="{{ $this->equipmentHeaderCode }}"
-                                        onclick="deleteEquipmentDetail({{$item->component_number}}, '{{$item->storage}}')">
+                                        onclick="deleteEquipmentDetail({{$item->component_number}})">
                                     Delete
                                 </button>
                             </td>
@@ -122,13 +122,13 @@
             })
         })
 
-        function deleteEquipmentDetail(componentNumber, storage) {
+        function deleteEquipmentDetail(componentNumber) {
             Swal.fire('Attention!',
                 'Are you sure you want to delete this equipment detail?',
                 'warning').then(function (result) {
                 if (result.isConfirmed) {
                     Swal.showLoading()
-                    @this.delete(componentNumber, storage);
+                    @this.delete(componentNumber);
                 }
             })
         }
