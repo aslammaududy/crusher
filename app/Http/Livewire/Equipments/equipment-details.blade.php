@@ -84,6 +84,11 @@
                                                :component-number="$item->component_number"/>
                             </div>
                             <div class="modal-footer">
+                                @if(!empty($item->file))
+                                    <button type="button" class="btn btn-danger"
+                                            onclick="deleteFile({{ $item->id }})">Delete
+                                    </button>
+                                @endif
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             </div>
                         </div>
@@ -141,9 +146,48 @@
                     'success'
                 ).then(function (result) {
                     if (result.isConfirmed) {
-                        Livewire.emitTo('equipments.equipment-details',"equipmentDetailDeleted")
+                        Livewire.emitTo('equipments.equipment-details', "equipmentDetailDeleted")
                     }
                 })
+            }, 100)
+        })
+
+        function deleteFile(id) {
+            Swal.fire('Attention!',
+                'Are you sure you want to delete this file?',
+                'warning').then(function (result) {
+                if (result.isConfirmed) {
+                    Swal.showLoading()
+                    @this.deleteFile(id);
+                }
+            })
+        }
+
+        window.addEventListener('fileDeleted', function (event) {
+            setTimeout(function () {
+                var success = event.detail.success;
+
+                if (success) {
+                    Swal.fire(
+                        'Success!',
+                        'File Deleted Successfully',
+                        'success'
+                    ).then(function (result) {
+                        if (result.isConfirmed) {
+                            Livewire.emitTo('equipments.equipment-details', "equipmentDetailDeleted")
+                        }
+                    })
+                } else {
+                    Swal.fire(
+                        'Oops!',
+                        'File Not Deleted',
+                        'error'
+                    ).then(function (result) {
+                        if (result.isConfirmed) {
+                            Livewire.emitTo('equipments.equipment-details', "equipmentDetailDeleted")
+                        }
+                    })
+                }
             }, 100)
         })
     </script>

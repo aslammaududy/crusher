@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Equipments;
 
 use App\Models\EquipmentDetail;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -48,5 +50,27 @@ class EquipmentDetails extends Component
         $detail->delete();
 
         $this->dispatchBrowserEvent('componentDetailDeleted');
+    }
+
+    public function deleteFile($id)
+    {
+        DB::beginTransaction();
+        try {
+            $detail = EquipmentDetail::find($id);
+
+            Storage::delete($detail->file);
+
+            $detail->file = "";
+            $detail->save();
+
+            DB::commit();
+            $this->dispatchBrowserEvent('fileDeleted', ["success" => true]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+
+            $this->dispatchBrowserEvent('fileDeleted', ["success" => false]);
+        }
+
+
     }
 }
