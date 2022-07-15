@@ -42,9 +42,9 @@ class EquipmentDetails extends Component
         $this->resetPage("equipment-code-$this->equipmentHeaderCode");
     }
 
-    public function delete($component_number)
+    public function delete($id)
     {
-        $detail = EquipmentDetail::where("component_number", $component_number)->first();
+        $detail = EquipmentDetail::find($id);
         $detail->delete();
 
         $this->dispatchBrowserEvent('componentDetailDeleted');
