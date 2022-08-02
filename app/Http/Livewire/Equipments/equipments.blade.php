@@ -41,7 +41,7 @@
                                     id="btn-{{ $item->code }}" data-bs-toggle="collapse"
                                     data-bs-target="#equipment-details-{{ $item->code }}" aria-expanded="false"
                                     aria-controls="equipment-details-{{ $item->code }}">Show
-                                    Details</button>
+                                    Parts</button>
 
                                 @php
                                 $eq = base64_encode(json_encode($item));
@@ -105,7 +105,7 @@
 
             $("#equipment-details-content").show()
 
-            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Hide Details';
+            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Hide Parts';
 
             Livewire.emitTo('equipments.equipment-details', 'loadDetails', equipmentCode)
         })
@@ -114,7 +114,7 @@
             $("#equipment-details-content").hide()
 
             var equipmentCode = $(e.target).data("equipment-code")
-            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Show Details';
+            document.querySelector(`#btn-${equipmentCode}`).innerText = 'Show Parts';
         })
     })
 </script>

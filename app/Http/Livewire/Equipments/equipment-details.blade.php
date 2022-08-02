@@ -11,7 +11,7 @@
                 <button type="button" data-bs-toggle="modal"
                         data-equipment-header-code="{{ $this->equipmentHeaderCode }}" data-bs-target="#exampleModal"
                         class="btn btn-primary btn-sm">
-                    Add Equipment Detail
+                    Add Part
                 </button>
                 <button type="button" wire:click="$refresh()" onclick="Swal.showLoading()"
                         class="btn btn-outline-success btn-sm" aria-label="Refresh">
@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-responsive table-bordered table-dark">
+        <table class="table table-responsive table-bordered table">
             <thead>
             <th>File</th>
             @auth
