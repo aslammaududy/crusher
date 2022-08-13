@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Account\AccountSetting;
 use App\Http\Livewire\Equipments\Equipments;
 use App\Http\Livewire\Equipments\Form as EquipmentForm;
 use App\Http\Livewire\Scanner\Scanner;
@@ -29,7 +30,7 @@ Route::get('/', function () {
 Route::get('/scanner', Scanner::class);
 Route::get('equipments/{qrcode}', Equipments::class);
 Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class)->middleware('auth');
-Route::get('account', \App\Http\Livewire\Account\AccountSetting::class)->middleware('auth');
+Route::get('account', AccountSetting::class)->middleware('auth');
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
