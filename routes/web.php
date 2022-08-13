@@ -29,7 +29,7 @@ Route::get('/', function () {
 Route::get('/scanner', Scanner::class);
 Route::get('equipments/{qrcode}', Equipments::class);
 Route::get('equipments/{qrcode}/form/{equipment?}', EquipmentForm::class)->middleware('auth');
-
+Route::get('account', \App\Http\Livewire\Account\AccountSetting::class)->middleware('auth');
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

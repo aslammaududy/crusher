@@ -26,6 +26,8 @@
                 <ul class="navbar-nav text-light" id="accordionSidebar">
                     <li class="nav-item"><a class="nav-link" href="{{ url('scanner') }}"><i
                                 class="fas fa-qrcode"></i><span>Scanner</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ url('account') }}"><i
+                                class="fas fa-user"></i><span>Account</span></a></li>
                 </ul>
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0"
                         id="sidebarToggle" type="button"></button></div>
